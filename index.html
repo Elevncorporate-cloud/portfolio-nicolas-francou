@@ -96,8 +96,8 @@ img{max-width:100%; display:block}
 .preuve .avatar{width:40px; height:40px; border-radius:50%; object-fit:cover; object-position:top; border:2px solid rgba(255,255,255,.15)}
 .preuve b{color:#fff; font-weight:600}
 .preuve .sep{width:1px; height:18px; background:rgba(255,255,255,.15)}
-.hero h1{color:#fff; max-width:19ch; margin-bottom:24px}
-.hero .sous{font-size:var(--t-l); color:#a1a1aa; max-width:62ch; margin-bottom:36px; line-height:1.5}
+.hero h1{color:#fff; max-width:19ch; margin-bottom:24px; text-shadow:0 2px 24px rgba(0,0,0,.55)}
+.hero .sous{font-size:var(--t-l); color:#d4d4d8; text-shadow:0 1px 14px rgba(0,0,0,.6); max-width:62ch; margin-bottom:36px; line-height:1.5}
 .hero .cta{display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-bottom:28px}
 .checks{display:flex; gap:24px; flex-wrap:wrap; justify-content:center; font-size:var(--t-xs); color:#d4d4d8; margin-bottom:64px}
 .checks span{display:inline-flex; align-items:center; gap:8px}
@@ -126,6 +126,38 @@ img{max-width:100%; display:block}
 .sommaire a i{font-style:normal; color:var(--signal)}
 
 
+
+
+/* Hero : scène animée aux couleurs du logo ---------------------------- */
+.hero{background:#0b0b10}
+.hero::before{display:none}
+.hero .scene{position:absolute; inset:0; overflow:hidden; pointer-events:none}
+.hero .blob{position:absolute; width:46vw; height:46vw; min-width:420px; min-height:420px; border-radius:50%; filter:blur(70px); opacity:.8; mix-blend-mode:screen; will-change:transform}
+.hero .b1{background:#3b7be0; left:-12%; top:-22%; animation:derive1 26s ease-in-out infinite alternate}
+.hero .b2{background:#ff7a1a; right:-10%; top:-18%; animation:derive2 30s ease-in-out infinite alternate}
+.hero .b3{background:#ffb627; left:28%; bottom:-30%; animation:derive3 34s ease-in-out infinite alternate}
+.hero .b4{background:#c81d6f; right:14%; bottom:-26%; animation:derive1 38s ease-in-out infinite alternate-reverse}
+.hero .b5{background:#39c6e8; left:-8%; bottom:0; width:32vw; height:32vw; animation:derive2 24s ease-in-out infinite alternate-reverse}
+@keyframes derive1{from{transform:translate(0,0) scale(1)} to{transform:translate(18vw,10vh) scale(1.15)}}
+@keyframes derive2{from{transform:translate(0,0) scale(1.1)} to{transform:translate(-16vw,14vh) scale(.95)}}
+@keyframes derive3{from{transform:translate(0,0) scale(1)} to{transform:translate(-10vw,-18vh) scale(1.2)}}
+.hero .trame{position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px); background-size:56px 56px; mask-image:radial-gradient(ellipse at center, #000 30%, transparent 75%); -webkit-mask-image:radial-gradient(ellipse at center, #000 30%, transparent 75%)}
+.hero .scene::after{content:""; position:absolute; inset:0; background:radial-gradient(ellipse at 50% 50%, rgba(11,11,16,.42) 0%, rgba(11,11,16,.28) 40%, rgba(11,11,16,.55) 75%, rgba(11,11,16,.9) 100%)}
+.hero .marque3d{position:absolute; left:50%; top:50%; width:min(62vw,760px); aspect-ratio:376/279; transform:translate(-50%,-52%); perspective:1200px; opacity:.5; filter:drop-shadow(0 30px 60px rgba(0,0,0,.6)) saturate(1.15)}
+.hero .marque3d img{width:100%; height:100%; display:block; transform-origin:center; animation:flotte 14s ease-in-out infinite; will-change:transform}
+@keyframes flotte{0%{transform:rotateX(14deg) rotateY(-16deg) translateY(0)} 50%{transform:rotateX(-8deg) rotateY(18deg) translateY(-18px)} 100%{transform:rotateX(14deg) rotateY(-16deg) translateY(0)}}
+.hero .eclat{position:absolute; width:120px; height:120px; clip-path:polygon(50% 0, 100% 50%, 50% 100%, 0 50%); opacity:.9; filter:blur(.3px); animation:eclat 18s linear infinite; mix-blend-mode:screen}
+.hero .e1{left:10%; top:18%; background:linear-gradient(135deg,#4c8dff,#1e4fcf); animation-duration:22s}
+.hero .e2{left:82%; top:14%; width:90px; height:90px; background:linear-gradient(135deg,#ffc145,#ff7a1a); animation-duration:19s; animation-delay:-6s}
+.hero .e3{left:70%; top:70%; width:70px; height:70px; background:linear-gradient(135deg,#ff5a00,#c81d6f); animation-duration:25s; animation-delay:-11s}
+.hero .e4{left:18%; top:72%; width:84px; height:84px; background:linear-gradient(135deg,#5ad7f0,#2b8fd6); animation-duration:21s; animation-delay:-3s}
+.hero .e5{left:48%; top:6%; width:56px; height:56px; background:linear-gradient(135deg,#b14cd6,#c81d6f); animation-duration:27s; animation-delay:-15s}
+.hero .e6{left:90%; top:52%; width:64px; height:64px; background:linear-gradient(135deg,#8a8a8a,#3f3f46); animation-duration:23s; animation-delay:-8s; opacity:.6}
+@keyframes eclat{0%{transform:translateY(0) rotate(0deg) scale(1)} 50%{transform:translateY(-40px) rotate(180deg) scale(.85)} 100%{transform:translateY(0) rotate(360deg) scale(1)}}
+.hero .wrap{z-index:1}
+.hero .preuve{backdrop-filter:blur(10px)}
+@media (prefers-reduced-motion:reduce){ .hero .blob,.hero .marque3d img,.hero .eclat{animation:none} }
+@media (max-width:760px){ .hero .blob{filter:blur(50px); min-width:300px; min-height:300px} .hero .marque3d{width:88vw; opacity:.22} .hero .eclat{transform:scale(.6)} }
 
 /* Programme IA ------------------------------------------------------ */
 .programme-grille{display:grid; grid-template-columns:1.15fr .85fr; gap:24px; align-items:start}
@@ -400,7 +432,7 @@ img{max-width:100%; display:block}
 .onglets a:hover{opacity:1}
 .onglets a.actif{background:#fff; color:var(--dark); opacity:1}
 .barre.claire .onglets a.actif{background:var(--dark); color:#fff}
-.hero .appel{font-size:var(--t-xl); font-weight:500; letter-spacing:-.015em; color:#fff; margin:0 0 28px; max-width:30ch}
+.hero .appel{font-size:var(--t-xl); font-weight:500; letter-spacing:-.015em; color:#fff; margin:0 0 28px; max-width:30ch; text-shadow:0 2px 18px rgba(0,0,0,.55)}
 .onglets-barre{position:sticky; top:calc(env(safe-area-inset-top,0px) + 68px); z-index:50; background:var(--bg-w); border-bottom:1px solid var(--border); scroll-margin-top:68px}
 .onglets-liste{display:flex; gap:8px; padding-block:12px; overflow-x:auto}
 .onglets-liste button{font:inherit; font-size:var(--t-s); font-weight:600; border:1px solid var(--border); background:var(--bg-w); color:var(--muted); padding:12px 20px; border-radius:999px; cursor:pointer; display:inline-flex; align-items:center; gap:10px; white-space:nowrap; min-height:48px}
@@ -618,6 +650,12 @@ img{max-width:100%; display:block}
 
 <main id="contenu">
   <section class="hero" id="haut" aria-labelledby="titre-accroche">
+    <div class="scene" id="hero-scene" aria-hidden="true">
+      <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span><span class="blob b5"></span>
+      <span class="trame"></span>
+      <div class="marque3d"><img src="assets/logo-marque.png" alt=""></div>
+      <span class="eclat e1"></span><span class="eclat e2"></span><span class="eclat e3"></span><span class="eclat e4"></span><span class="eclat e5"></span><span class="eclat e6"></span>
+    </div>
     <div class="wrap">
       <div class="preuve" id="hero-preuve"></div>
       <h1 id="titre-accroche"></h1>
@@ -662,7 +700,7 @@ img{max-width:100%; display:block}
   </footer>
 </main>
 
-<script src="content.js?v=21"></script>
+<script src="content.js?v=22"></script>
 <script>
 (function(){
   document.documentElement.classList.add('js');
@@ -729,6 +767,19 @@ img{max-width:100%; display:block}
       piste.style.setProperty('--n', r.length);
       mq.append(h('div',{class:'mq-row'+(i%2?' rev':'')}, piste));
     });
+  })();
+
+
+  /* Hero : parallaxe souris sur la scène ------------------------------ */
+  (function(){
+    const sc = $('#hero-scene'); if(!sc || matchMedia('(prefers-reduced-motion: reduce)').matches || matchMedia('(hover: none)').matches) return;
+    const m = sc.querySelector('.marque3d'), ecl = sc.querySelectorAll('.eclat'), blobs = sc.querySelectorAll('.blob');
+    let tx=0, ty=0, cx=0, cy=0, raf=null;
+    const anim = () => { cx += (tx-cx)*.06; cy += (ty-cy)*.06;
+      m.style.transform = `translate(calc(-50% + ${cx*26}px), calc(-52% + ${cy*18}px))`;
+      ecl.forEach((e,i) => { e.style.marginLeft = (cx*(10+i*6))+'px'; e.style.marginTop = (cy*(8+i*5))+'px'; });
+      if(Math.abs(tx-cx)>.001 || Math.abs(ty-cy)>.001) raf = requestAnimationFrame(anim); else raf=null; };
+    $('#haut').addEventListener('mousemove', ev => { const r = sc.getBoundingClientRect(); tx = (ev.clientX - r.left)/r.width - .5; ty = (ev.clientY - r.top)/r.height - .5; if(!raf) raf = requestAnimationFrame(anim); });
   })();
 
   /* Contact --------------------------------------------------------- */
