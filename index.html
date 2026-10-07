@@ -132,7 +132,7 @@ img{max-width:100%; display:block}
 .hero{background:#0b0b10}
 .hero::before{display:none}
 .hero .scene{position:absolute; inset:0; overflow:hidden; pointer-events:none}
-.hero .blob{position:absolute; width:46vw; height:46vw; min-width:420px; min-height:420px; border-radius:50%; filter:blur(70px); opacity:.8; mix-blend-mode:screen; will-change:transform}
+.hero .blob{position:absolute; width:46vw; height:46vw; min-width:420px; min-height:420px; border-radius:50%; filter:blur(70px); opacity:.65; mix-blend-mode:screen; will-change:transform}
 .hero .b1{background:#3b7be0; left:-12%; top:-22%; animation:derive1 26s ease-in-out infinite alternate}
 .hero .b2{background:#ff7a1a; right:-10%; top:-18%; animation:derive2 30s ease-in-out infinite alternate}
 .hero .b3{background:#ffb627; left:28%; bottom:-30%; animation:derive3 34s ease-in-out infinite alternate}
@@ -142,7 +142,7 @@ img{max-width:100%; display:block}
 @keyframes derive2{from{transform:translate(0,0) scale(1.1)} to{transform:translate(-16vw,14vh) scale(.95)}}
 @keyframes derive3{from{transform:translate(0,0) scale(1)} to{transform:translate(-10vw,-18vh) scale(1.2)}}
 .hero .trame{position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px); background-size:56px 56px; mask-image:radial-gradient(ellipse at center, #000 30%, transparent 75%); -webkit-mask-image:radial-gradient(ellipse at center, #000 30%, transparent 75%)}
-.hero .scene::after{content:""; position:absolute; inset:0; background:radial-gradient(ellipse at 50% 50%, rgba(11,11,16,.42) 0%, rgba(11,11,16,.28) 40%, rgba(11,11,16,.55) 75%, rgba(11,11,16,.9) 100%)}
+.hero .scene::after{content:""; position:absolute; inset:0; background:radial-gradient(ellipse at 50% 50%, rgba(11,11,16,.5) 0%, rgba(11,11,16,.36) 40%, rgba(11,11,16,.6) 75%, rgba(11,11,16,.92) 100%)}
 .hero .marque3d{position:absolute; left:50%; top:50%; width:min(62vw,760px); aspect-ratio:376/279; transform:translate(-50%,-52%); perspective:1200px; opacity:.5; filter:drop-shadow(0 30px 60px rgba(0,0,0,.6)) saturate(1.15)}
 .hero .marque3d img{width:100%; height:100%; display:block; transform-origin:center; animation:flotte 14s ease-in-out infinite; will-change:transform}
 @keyframes flotte{0%{transform:rotateX(14deg) rotateY(-16deg) translateY(0)} 50%{transform:rotateX(-8deg) rotateY(18deg) translateY(-18px)} 100%{transform:rotateX(14deg) rotateY(-16deg) translateY(0)}}
@@ -158,6 +158,23 @@ img{max-width:100%; display:block}
 .hero .preuve{backdrop-filter:blur(10px)}
 @media (prefers-reduced-motion:reduce){ .hero .blob,.hero .marque3d img,.hero .eclat{animation:none} }
 @media (max-width:760px){ .hero .blob{filter:blur(50px); min-width:300px; min-height:300px} .hero .marque3d{width:88vw; opacity:.22} .hero .eclat{transform:scale(.6)} }
+
+
+/* Hero : aurore (canvas), teinte qui tourne au défilement ------------- */
+.hero{--p:0}
+.hero .aurore{position:absolute; inset:-10%; width:120%; height:120%; filter:blur(28px) saturate(1.25); opacity:.55; transform:translateY(calc(var(--p) * 12%))}
+.hero .blob{filter:blur(70px) hue-rotate(calc(var(--p) * 160deg)); transform-origin:center}
+.hero .scene > .blob,.hero .scene > .trame{translate:0 calc(var(--p) * 22%)}
+.hero .scene{--mx:0px; --my:0px}
+.hero .marque3d{opacity:calc(.5 - var(--p) * .4); transform:translate(calc(-50% + var(--mx)), calc(-52% + var(--p) * 60% + var(--my))) rotate(calc(var(--p) * 18deg)) scale(calc(1 - var(--p) * .25)); filter:drop-shadow(0 30px 60px rgba(0,0,0,.6)) saturate(1.15) hue-rotate(calc(var(--p) * 120deg))}
+.hero .eclat{filter:hue-rotate(calc(var(--p) * 200deg)); translate:0 calc(var(--p) * -40%)}
+.hero .wrap{transform:translateY(calc(var(--p) * 60px)); opacity:calc(1 - var(--p) * .55)}
+.hero .mot{display:inline-block; opacity:0; transform:translateY(.4em); animation:mot .7s cubic-bezier(.2,.7,.2,1) forwards; animation-delay:calc(var(--i) * 70ms)}
+@keyframes mot{to{opacity:1; transform:none}}
+.hero .indice{position:absolute; left:50%; bottom:22px; transform:translateX(-50%); width:26px; height:42px; border:2px solid rgba(255,255,255,.35); border-radius:14px; opacity:calc(.9 - var(--p) * 3)}
+.hero .indice::before{content:""; position:absolute; left:50%; top:8px; width:4px; height:8px; margin-left:-2px; border-radius:2px; background:#fff; animation:molette 1.8s ease-in-out infinite}
+@keyframes molette{0%{transform:translateY(0); opacity:1} 70%{transform:translateY(14px); opacity:0} 100%{transform:translateY(0); opacity:0}}
+@media (prefers-reduced-motion:reduce){ .hero .aurore,.hero .indice{display:none} .hero .mot{animation:none; opacity:1; transform:none} }
 
 /* Programme IA ------------------------------------------------------ */
 .programme-grille{display:grid; grid-template-columns:1.15fr .85fr; gap:24px; align-items:start}
@@ -651,11 +668,13 @@ img{max-width:100%; display:block}
 <main id="contenu">
   <section class="hero" id="haut" aria-labelledby="titre-accroche">
     <div class="scene" id="hero-scene" aria-hidden="true">
+      <canvas class="aurore" id="hero-aurore"></canvas>
       <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span><span class="blob b5"></span>
       <span class="trame"></span>
       <div class="marque3d"><img src="assets/logo-marque.png" alt=""></div>
       <span class="eclat e1"></span><span class="eclat e2"></span><span class="eclat e3"></span><span class="eclat e4"></span><span class="eclat e5"></span><span class="eclat e6"></span>
     </div>
+    <span class="indice" aria-hidden="true"></span>
     <div class="wrap">
       <div class="preuve" id="hero-preuve"></div>
       <h1 id="titre-accroche"></h1>
@@ -700,7 +719,7 @@ img{max-width:100%; display:block}
   </footer>
 </main>
 
-<script src="content.js?v=22"></script>
+<script src="content.js?v=23"></script>
 <script>
 (function(){
   document.documentElement.classList.add('js');
@@ -770,13 +789,59 @@ img{max-width:100%; display:block}
   })();
 
 
+
+  /* Hero : aurore animée, réaction au défilement, apparition du titre -- */
+  (function(){
+    const hero = $('#haut'), cv = $('#hero-aurore'); if(!hero || !cv) return;
+    const reduit = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // titre mot à mot
+    const h1 = $('#titre-accroche');
+    if(h1 && h1.textContent.trim()){
+      const mots = h1.textContent.trim().split(/\s+/); h1.textContent='';
+      mots.forEach((m,i) => { h1.append(h('span',{class:'mot', style:'--i:'+i}, m)); h1.append(document.createTextNode(' ')); });
+    }
+    // défilement -> --p (0 en haut, 1 quand le hero est passé)
+    const majP = () => { const r = hero.getBoundingClientRect(); const p = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height*.8))); hero.style.setProperty('--p', p.toFixed(3)); };
+    addEventListener('scroll', majP, {passive:true}); majP();
+    if(reduit) return;
+    // aurore : rubans de couleur qui ondulent, palette du logo, teinte qui dérive
+    const ctx = cv.getContext('2d'); let W=0, H=0, t=0, visible=true, raf=null;
+    const pal = [[59,123,224],[57,198,232],[255,122,26],[255,182,39],[200,29,111],[177,76,214]];
+    function taille(){ W = cv.width = Math.max(320, Math.floor(hero.clientWidth/3)); H = cv.height = Math.max(200, Math.floor(hero.clientHeight/3)); }
+    taille(); addEventListener('resize', taille);
+    function ruban(i, time){
+      const c = pal[i % pal.length]; const hueShift = (time*6 + i*40) % 360;
+      ctx.beginPath();
+      const amp = H*(.12 + .05*Math.sin(time*.3+i)), base = H*(.2 + i*.13);
+      ctx.moveTo(-20, H);
+      for(let x=-20; x<=W+20; x+=12){
+        const y = base + Math.sin(x*.012 + time*.6 + i*1.7)*amp + Math.sin(x*.027 - time*.4 + i)*amp*.5 + Math.cos(x*.005 + time*.2)*H*.06;
+        ctx.lineTo(x, y);
+      }
+      ctx.lineTo(W+20, H); ctx.closePath();
+      ctx.fillStyle = `hsla(${(rgbToHue(c)+hueShift)%360}, 85%, ${46 + i*3}%, ${.42 - i*.04})`;
+      ctx.fill();
+    }
+    function rgbToHue(c){ const r=c[0]/255,g=c[1]/255,b=c[2]/255, mx=Math.max(r,g,b), mn=Math.min(r,g,b), d=mx-mn; if(!d) return 0; let h = mx===r ? ((g-b)/d)%6 : mx===g ? (b-r)/d+2 : (r-g)/d+4; return (h*60+360)%360; }
+    function cadre(){
+      if(!visible){ raf=null; return; }
+      t += 0.012;
+      ctx.globalCompositeOperation='source-over'; ctx.fillStyle='#0b0b10'; ctx.fillRect(0,0,W,H);
+      ctx.globalCompositeOperation='lighter';
+      for(let i=5;i>=0;i--) ruban(i, t);
+      raf = requestAnimationFrame(cadre);
+    }
+    new IntersectionObserver(es => { visible = es[0].isIntersecting; if(visible && !raf) raf = requestAnimationFrame(cadre); }).observe(hero);
+    raf = requestAnimationFrame(cadre);
+  })();
+
   /* Hero : parallaxe souris sur la scène ------------------------------ */
   (function(){
     const sc = $('#hero-scene'); if(!sc || matchMedia('(prefers-reduced-motion: reduce)').matches || matchMedia('(hover: none)').matches) return;
     const m = sc.querySelector('.marque3d'), ecl = sc.querySelectorAll('.eclat'), blobs = sc.querySelectorAll('.blob');
     let tx=0, ty=0, cx=0, cy=0, raf=null;
     const anim = () => { cx += (tx-cx)*.06; cy += (ty-cy)*.06;
-      m.style.transform = `translate(calc(-50% + ${cx*26}px), calc(-52% + ${cy*18}px))`;
+      sc.style.setProperty('--mx', (cx*26).toFixed(1)+'px'); sc.style.setProperty('--my', (cy*18).toFixed(1)+'px');
       ecl.forEach((e,i) => { e.style.marginLeft = (cx*(10+i*6))+'px'; e.style.marginTop = (cy*(8+i*5))+'px'; });
       if(Math.abs(tx-cx)>.001 || Math.abs(ty-cy)>.001) raf = requestAnimationFrame(anim); else raf=null; };
     $('#haut').addEventListener('mousemove', ev => { const r = sc.getBoundingClientRect(); tx = (ev.clientX - r.left)/r.width - .5; ty = (ev.clientY - r.top)/r.height - .5; if(!raf) raf = requestAnimationFrame(anim); });

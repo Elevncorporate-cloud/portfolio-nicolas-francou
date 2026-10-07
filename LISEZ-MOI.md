@@ -42,7 +42,7 @@ Points utiles :
 - Les avis sont dans `avis.liste` (nom, poste, date, texte, lien, photo). Les photos sont dans `assets/avis/`. Pour retirer un avis, supprimez son bloc `{ ... },`. `avis.afficherDates: true` affiche la date de chaque recommandation (masquée par défaut). Les entrées marquées `photoIllustration: true` utilisent une photo d'illustration (`apprenant-1` à `apprenant-4`), pas la photo de la personne.
 - Une capture peut porter `fichier: "assets/documents/....pdf"` : un lien « Ouvrir le PDF » apparaît sous la légende (utilisé pour les exemples de CV).
 - `captures: []` → aucune galerie. Pour ajouter : `captures: [{ src: "assets/captures/fichier.png", alt: "Description", legende: "Légende" }]`.
-- Après une modification de `content.js` publiée en ligne, changez le numéro dans `<script src="content.js?v=22">` (index.html) pour forcer les navigateurs à recharger les contenus.
+- Après une modification de `content.js` publiée en ligne, changez le numéro dans `<script src="content.js?v=23">` (index.html) pour forcer les navigateurs à recharger les contenus.
 - `reglages.portrait` (grande photo), `reglages.portraitAvatar` (petit rond d'accueil), `reglages.cvPdf`, `reglages.certificatQualiopi` : renseignez le chemin du fichier pour faire apparaître le portrait, le bouton « Consulter mon CV » et le bouton « Consulter le certificat ».
 - L'animation de l'accueil (halos de couleur, emblème du logo en 3D, éclats) est en CSS dans `index.html` (bloc « Hero : scène animée »). L'emblème est `assets/logo-marque.png`. Elle se coupe automatiquement si le visiteur a activé « réduire les animations ».
 - `reglages.videoAccueil` : `true` remet la vidéo des agents sur la page d'accueil (retirée pour éviter le doublon avec la carte des réalisations).
