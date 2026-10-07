@@ -62,11 +62,20 @@ Si la page devient blanche après une modification, une virgule ou un guillemet 
 
 ## Publier le site
 
-Le site est statique : il suffit de mettre en ligne le dossier complet (index.html, content.js, assets/).
+Le site est en ligne sur GitHub Pages, à partir du dépôt public `Elevncorporate-cloud/portfolio-nicolas-francou` (branche `main`, racine) :
 
-Option simple : un hébergeur de sites statiques (par exemple Netlify ou GitHub Pages) : déposez le dossier, le site est en ligne avec une adresse à transmettre. Sur un hébergement classique (OVH, o2switch…), copiez le dossier par FTP dans le répertoire web.
+**https://elevncorporate-cloud.github.io/portfolio-nicolas-francou/**
 
-Avant de publier, passez par `livrables/checklist-faits.md` : rien de non confirmé ne doit rester affiché.
+Tout ce qui est poussé sur la branche `main` est en ligne une à deux minutes plus tard. Le dossier `livrables/` n'est pas publié (fichier `.gitignore`), car il contient des notes de travail.
+
+Pour mettre à jour le site :
+
+- Depuis cette conversation : demandez simplement la modification, je pousse la nouvelle version.
+- Depuis votre ordinateur : modifiez `content.js` ou un fichier de `assets/`, puis sur github.com, ouvrez le dépôt, bouton « Add file → Upload files », déposez les fichiers modifiés et validez (« Commit changes »). Pensez à changer le numéro `content.js?v=…` dans `index.html` si vous modifiez `content.js`, pour forcer le rechargement chez les visiteurs.
+
+Pour une adresse à votre nom (par exemple `portfolio.elevencorporate.com`) : chez votre registrar, ajoutez un enregistrement DNS `CNAME` de `portfolio` vers `elevncorporate-cloud.github.io`, puis dans le dépôt, Settings → Pages → Custom domain, saisissez `portfolio.elevencorporate.com` et cochez « Enforce HTTPS ».
+
+Avant de publier une modification de contenu, passez par `livrables/checklist-faits.md` : rien de non confirmé ne doit rester affiché.
 
 ## Police de caractères
 
